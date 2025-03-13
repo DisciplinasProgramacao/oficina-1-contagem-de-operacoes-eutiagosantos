@@ -119,35 +119,53 @@ public class App {
     }
 
     public static void main(String[] args) {
-        // para cada codigo,
-        // itere sobre o array de tamanhos de teste correspondente
-        // rode o codigo,
-        // salve o tempo de execuçao do mesmo.
+        long inicio, fim;
+        int contOp;
 
-        // marcar o tempo de inicio
-        // executar o codigo
-        // marcar o tempo de fim
-        //teste grande
-        int[] vetorTesteGrande = gerarVetor(tamanhosTesteGrande.length);
-        long tempoInicialTesteGrande = System.currentTimeMillis();
-
-        int operacoesCodigo1 = codigo1(vetorTesteGrande);
-        int operacoesCodigo2 = codigo2(vetorTesteGrande);
-
-        //Contagem de operacoes teste vetor grande
-        System.out.println("\nCodigo 1\n Operacoes: " + operacoesCodigo1 + " Tempo ms: " + (System.currentTimeMillis() - tempoInicialTesteGrande));
-        System.out.println("\nCodigo 2\n Operacoes: " + operacoesCodigo2 + " Tempo ms: " + (System.currentTimeMillis() - tempoInicialTesteGrande));
-
-        //teste medio
-        int[] vetorTesteMedio = gerarVetor(tamanhosTesteMedio.length);
-        long tempoInicalTesteMedio = System.currentTimeMillis();
-
-        System.out.println("\nCodigo 3\n Operacoes: " + codigo3(vetorTesteMedio) + " Tempo ms: " + (System.currentTimeMillis() - tempoInicalTesteMedio));
-
-        //teste pequeno
-        int[] vetorTestePequeno = gerarVetor(tamanhosTestePequeno.length);
-        long tempoInicialTestePequeno = System.currentTimeMillis();
-        codigo4(vetorTestePequeno.length);
-        System.out.println("\nCodigo 4\n Operacoes: " + codigo4(vetorTestePequeno.length) + " Tempo ms: " + (System.currentTimeMillis() - tempoInicialTestePequeno));
+        //VETOR GRANDE
+        for (int tam : tamanhosTesteGrande) {
+            int[] vetorGrande = gerarVetor(tam);
+            inicio = System.nanoTime();
+            contOp = codigo1(vetorGrande);
+            fim = System.nanoTime();
+            long tempo = fim - inicio;
+            System.out.println("Vetor Grande Tamanho: " + tam + " Operações: " + contOp + " Tempo: " + tempo);
+            //========================================================================================
+            inicio = System.nanoTime();
+            contOp = codigo2(vetorGrande);
+            fim = System.nanoTime();
+            tempo = fim - inicio;
+            System.out.println("Vetor Grande Tamanho: " + tam + " Operações: " + contOp + " Tempo: " + tempo);
+        }
+        //VETOR MEDIO
+        for (int tam : tamanhosTesteMedio) {
+            int[] vetor = gerarVetor(tam);
+            contOp = 0;
+            inicio = System.nanoTime();
+            for (int i = 0; i < vetor.length - 1; i++) {
+                int menor = i;
+                for (int j = i + 1; j < vetor.length; j++) {
+                    contOp++;
+                    if (vetor[j] < vetor[menor]) {
+                        menor = j;
+                    }
+                }
+                int temp = vetor[i];
+                vetor[i] = vetor[menor];
+                vetor[menor] = temp;
+                contOp += 3;
+            }
+            fim = System.nanoTime();
+            long tempo = fim - inicio;
+            System.out.println("Vetor Medio Tamanho: " + tam + " Operações: " + contOp + " Tempo: " + tempo);
+        }
+        //VETOR PEQUENO
+        for (int tam : tamanhosTestePequeno) {
+            inicio = System.nanoTime();
+            contOp = codigo4(tam);
+            fim = System.nanoTime();
+            long tempo = fim - inicio;
+            System.out.println("Vetor Pequeno Tamanho: " + tam + " Operações: " + contOp + " Tempo: " + tempo);
+        }
     }
 }
